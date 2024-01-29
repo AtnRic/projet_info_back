@@ -1,0 +1,4 @@
+export const constants = {
+    secret: 'nXsm35HncB49JMSDoLPbWNNwh94mvZTMqbAXAQan5ozBmHAqww',
+    salt: 79360925346897838346640781837885237603513264912823
+}
