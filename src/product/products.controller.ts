@@ -72,13 +72,12 @@ export class ProductsController {
     @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(id);
     const mongoId = await this.productsService.updateProduct(
       name,
       description,
       price,
       quantity,
-      file.path,
+        'http://localhost:3000/public/' + file.filename,
       id,
     );
     return mongoId;
