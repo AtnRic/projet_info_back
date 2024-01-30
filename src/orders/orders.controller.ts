@@ -18,13 +18,11 @@ export class OrdersController {
   async addOrder(
     @Body('products')
     products: Array<{ productId: string; quantity: number }>,
-    @Body('price') price: number,
     @Request() req,
   ) {
     console.log(req);
     const mongoId = await this.ordersService.insertOrder(
       products,
-      price,
       req.user.data.sub,
     );
     return mongoId;

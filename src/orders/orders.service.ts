@@ -2,28 +2,30 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { Order } from './order.model';
 import { InjectModel } from '@nestjs/mongoose';
+import { Product } from 'src/product/product.model';
 
 @Injectable()
 export class OrdersService {
   constructor(
     @InjectModel('Order') private readonly orderModel: Model<Order>,
+    @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
 
   async insertOrder(
     products: Array<{ productId: string; quantity: number }>,
-    price: number,
     userId: string,
   ) {
     if (!products) {
       return new BadRequestException('Missing products');
     }
-    if (!price) {
-      return new BadRequestException('Missing price');
+    let total = 0;
+    for (const product of products) {
+      const result = await this.productModel.findById(product.productId);
+      total = total + result.price;
     }
-    console.log(products, price, userId);
     const product = new this.orderModel({
       products,
-      price,
+      total,
       userId,
       date: new Date(),
     });

@@ -19,6 +19,7 @@ export class AuthService {
       constants.salt,
     );
 
+    console.log(createUserDto);
     const user = await this.userService.create(createUserDto);
 
     const token = await this.generateTokens(user);
@@ -64,6 +65,7 @@ export class AuthService {
       email: user.email,
       firstname: user.firstname,
       lastname: user.lastname,
+      money: user.money,
     };
 
     return {
