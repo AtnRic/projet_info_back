@@ -7,6 +7,7 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
+  Param,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { diskStorage } from 'multer';
@@ -18,7 +19,7 @@ import { extname } from 'path';
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
-  @Post('addProduct')
+  @Post('')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -49,7 +50,7 @@ export class ProductsController {
     return mongoId;
   }
 
-  @Patch('updateProduct')
+  @Patch(':id')
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -68,7 +69,7 @@ export class ProductsController {
     @Body('description') description: string,
     @Body('price') price: number,
     @Body('quantity') quantity: number,
-    @Body('id') id: number,
+    @Param('id') id: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
     console.log(id);
@@ -83,21 +84,21 @@ export class ProductsController {
     return mongoId;
   }
 
-  @Delete('deleteProduct')
-  async deleteProduct(@Body('id') id: number) {
+  @Delete(':id')
+  async deleteProduct(@Param('id') id: number) {
     console.log(id);
     const product = await this.productsService.deleteProduct(id);
     return product;
   }
 
-  @Get('getProducts')
+  @Get('')
   async getProducts() {
     const products = await this.productsService.getProducts();
     return products;
   }
 
-  @Get('getProduct')
-  async getProduct(@Body('id') id: number) {
+  @Get(':id')
+  async getProduct(@Param('id') id: number) {
     const product = await this.productsService.getProduct(id);
     return product;
   }
