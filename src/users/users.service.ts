@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import {Model} from "mongoose";
-import {User} from "./users.schema";
-import {InjectModel} from "@nestjs/mongoose";
-import * as bcrypt from 'bcrypt'
+import { Model } from 'mongoose';
+import { User } from './users.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UsersService {
-  constructor(
-      @InjectModel(User.name) private userModel: Model<User>,
-  ) {}
+  constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const createdUser = new this.userModel(createUserDto);
@@ -19,10 +15,14 @@ export class UsersService {
   }
 
   async findOne(email: string): Promise<User> {
-    return await this.userModel.findOne({email: email}).exec();
+    return await this.userModel.findOne({ email: email }).exec();
   }
 
   async find(email: string) {
-    return this.userModel.exists({email: email});
+    return await this.userModel.exists({ email: email });
+  }
+
+  async findAll() {
+    return await this.userModel.find().exec();
   }
 }
