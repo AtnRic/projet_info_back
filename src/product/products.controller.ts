@@ -39,13 +39,12 @@ export class ProductsController {
     @Body('quantity') quantity: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(file);
     const mongoId = await this.productsService.insertProduct(
       name,
       description,
       price,
       quantity,
-      file.path,
+      'http://localhost:3000/public/' + file.filename,
     );
     return mongoId;
   }
