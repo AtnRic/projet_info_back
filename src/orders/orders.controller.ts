@@ -1,27 +1,40 @@
-// import {
-//   Controller,
-//   Get,
-//   Post,
-//   Body,
-//   Patch,
-//   Param,
-//   Delete,
-// } from '@nestjs/common';
-// import { OrdersService } from './orders.service';
-// import { CreateOrderDto } from './dto/create-order.dto';
-// import { UpdateOrderDto } from './dto/update-order.dto';
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Request,
+  Get,
+} from '@nestjs/common';
+import { OrdersService } from './orders.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
-// @Controller('orders')
-// export class OrdersController {
-//   constructor(private readonly ordersService: OrdersService) {}
+@Controller('orders')
+export class OrdersController {
+  constructor(private readonly ordersService: OrdersService) {}
 
-//   @Post('addOrder')
-//   async addOrder(
-//     @Body('products')
-//     products: Array<{ productId: string; quantity: number }>,
-//     @Body('price') price: number,
-//   ) {
-//     const mongoId = await this.ordersService.insertOrder(products, price);
-//     return mongoId;
-//   }
-// }
+  @Post('addOrder')
+  @UseGuards(AuthGuard)
+  async addOrder(
+    @Body('products')
+    products: Array<{ productId: string; quantity: number }>,
+    @Body('price') price: number,
+    @Request() req,
+  ) {
+    console.log(req);
+    const mongoId = await this.ordersService.insertOrder(
+      products,
+      price,
+      req.user.data.sub,
+    );
+    return mongoId;
+  }
+
+  @Get('getUserOrders')
+  @UseGuards(AuthGuard)
+  async getUserOrders(@Request() req) {
+    console.log(req);
+    const mongoId = await this.ordersService.getUserOrders(req.user.data.sub);
+    return mongoId;
+  }
+}
