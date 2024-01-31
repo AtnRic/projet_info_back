@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -18,6 +19,11 @@ export class AuthService {
     private jwt: JwtService,
   ) {}
   async register(createUserDto: CreateUserDto) {
+    const foundUser = await this.userService.findOne(createUserDto.email);
+    if (foundUser) {
+      return new BadRequestException('Ce mail est déjà utilisé.');
+    }
+
     createUserDto.password = await bcrypt.hash(
       createUserDto.password,
       constants.salt,
