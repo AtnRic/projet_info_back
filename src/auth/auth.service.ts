@@ -45,7 +45,7 @@ export class AuthService {
     //console.log(foundUser);
     const hashPwd = await bcrypt.hash(data.password, constants.salt);
     if (await bcrypt.compare(foundUser?.password, hashPwd)) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Mauvais mot de passe.');
     }
 
     const token = await this.generateTokens(foundUser);
