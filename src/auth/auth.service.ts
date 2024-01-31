@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
@@ -29,6 +33,9 @@ export class AuthService {
 
   async login(data: { email: string; password: string }) {
     const foundUser = await this.userService.findOne(data.email);
+    if (!foundUser) {
+      return new NotFoundException('Aucun utilisateur avec cet adresse mail.');
+    }
     //console.log(foundUser);
     const hashPwd = await bcrypt.hash(data.password, constants.salt);
     if (await bcrypt.compare(foundUser?.password, hashPwd)) {
