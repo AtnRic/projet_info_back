@@ -16,14 +16,12 @@ import { AuthGuard } from './auth.guard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @HttpCode(HttpStatus.OK)
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto);
     return await this.authService.register(createUserDto);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() data: { email: string; password: string }) {
     return await this.authService.login(data);
