@@ -13,7 +13,7 @@ export const OrderSchema = new mongoose.Schema({
 
 export interface Order {
   date: Date;
-  products: { productId: String; quantity: number };
+  products: Array<{ productId: String; quantity: number }>;
   userId: string;
   price: number;
 }

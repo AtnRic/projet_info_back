@@ -77,7 +77,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-        'http://localhost:3000/public/' + file.filename,
+      'http://localhost:3000/public/' + file.filename,
       id,
     );
     return mongoId;

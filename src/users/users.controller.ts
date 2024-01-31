@@ -1,5 +1,15 @@
-import { Controller, Get, Patch, Body, Delete, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Patch,
+  Body,
+  Delete,
+  Param,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -42,6 +52,14 @@ export class UsersController {
   ) {
     console.log('id', id);
     const mongoId = await this.usersService.deleteOne(id);
+    return mongoId;
+  }
+
+  @Get('orders')
+  @UseGuards(AuthGuard)
+  async getOrders(@Request() req) {
+    console.log(req);
+    const mongoId = await this.usersService.getOrders(req.user.data.sub);
     return mongoId;
   }
 }
