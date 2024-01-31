@@ -45,7 +45,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      'http://163.172.133.151/public/' + file.filename,
+      'https://api.qrcook.store/public/' + file.filename,
     );
     return mongoId;
   }
@@ -77,7 +77,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      'http://163.172.133.151/public/' + file.filename,
+      'https://api.qrcook.store/public/' + file.filename,
       id,
     );
     return mongoId;
