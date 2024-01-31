@@ -22,6 +22,29 @@ export class UsersController {
     return mongoId;
   }
 
+  @Patch('')
+  @UseGuards(AuthGuard)
+  async update(
+    @Request() req,
+    @Body('firstname')
+    firstname: string,
+    @Body('lastname')
+    lastname: string,
+    @Body('email')
+    email: string,
+    @Body('money')
+    money: number,
+  ) {
+    const mongoId = await this.usersService.updateOne(
+      req.user.data.sub,
+      firstname,
+      lastname,
+      email,
+      money,
+    );
+    return mongoId;
+  }
+
   @Patch(':id')
   async updateOne(
     @Param('id')
