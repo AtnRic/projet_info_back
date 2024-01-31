@@ -62,7 +62,7 @@ export class ProductsService {
       product.price = price;
     }
     if (picture) {
-      unlink('images' + product.picture.slice(28), (err) => {
+      unlink('images' + product.picture.slice(29), (err) => {
         if (err) {
           throw err;
         }
@@ -96,7 +96,7 @@ export class ProductsService {
     if (!product) {
       return new NotFoundException('Could not find the product with id: ' + id);
     }
-    await unlink('images' + product.picture.slice(28), (err) => {
+    await unlink('images' + product.picture.slice(29), (err) => {
       if (err) {
         throw err;
       }

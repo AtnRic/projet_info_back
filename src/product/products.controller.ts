@@ -45,7 +45,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      'http://localhost:3000/public/' + file.filename,
+      'http://163.172.133.151/public/' + file.filename,
     );
     return mongoId;
   }
@@ -77,7 +77,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      'http://localhost:3000/public/' + file.filename,
+      'http://163.172.133.151/public/' + file.filename,
       id,
     );
     return mongoId;

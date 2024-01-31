@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors({
     origin: '*',
-    methods: '*',
+    methods: '*'
   });
   app.useStaticAssets(join(__dirname, '..', 'images'), {
     prefix: '/public',
