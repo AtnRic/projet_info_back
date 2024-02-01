@@ -15,7 +15,7 @@ import {Product} from "../product/product.model";
 interface Order2 {
   order: Order;
   user: User;
-  products: Product[]
+  products: Array<{product: Product, quantity: number}>
 }
 
 @Controller('orders')
