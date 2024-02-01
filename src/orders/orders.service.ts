@@ -16,16 +16,17 @@ export class OrdersService {
     userId: string,
   ) {
     if (!products) {
-      return new BadRequestException('Missing products');
+      throw new BadRequestException('Missing products');
     }
     let total = 0;
     for (const product of products) {
+      console.log(product);
       const result = await this.productModel.findById(product.productId);
       total = total + result.price * product.quantity;
     }
     const product = new this.orderModel({
       products,
-      total,
+      price: total,
       userId,
       date: new Date(),
     });

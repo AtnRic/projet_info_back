@@ -20,7 +20,6 @@ export class OrdersController {
     products: Array<{ productId: string; quantity: number }>,
     @Request() req,
   ) {
-    console.log(req);
     const mongoId = await this.ordersService.insertOrder(
       products,
       req.user.data.sub,
