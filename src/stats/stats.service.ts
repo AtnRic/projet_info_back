@@ -34,14 +34,14 @@ export class StatsService {
     });
     console.log('orders', orders);
     let total = 0;
-    let quantity = 0;
+    let quantity: number = 0;
     const monthPrice = Array(12).fill(0);
     const monthProduct = Array(12).fill(0);
     for (const order of orders) {
       const products = order.products;
       const month = new Date(order.date).getUTCMonth();
       for (const product of products) {
-        quantity += product.quantity;
+        quantity = Number(quantity) + Number(product.quantity);
         monthProduct[month] += product.quantity;
       }
       if (order.price !== undefined) {
