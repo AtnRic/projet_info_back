@@ -105,6 +105,17 @@ export class ProductsService {
     return product as Product;
   }
 
+  async getProductsByIds(ids) {
+    const products = [];
+    for (const id of ids) {
+      const product = await this.productModel.findById(id);
+      if (product) {
+        products.push(product);
+      }
+    }
+    return products as Product[];
+  }
+
   async deleteProduct(id: number) {
     const product = await this.productModel.findByIdAndDelete(id);
     console.log(product);

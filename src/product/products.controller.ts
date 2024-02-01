@@ -93,7 +93,12 @@ export class ProductsController {
     const products = await this.productsService.getProducts();
     return products;
   }
-
+  @Get('getProductsByIds')
+  async getProductsByIds(@Body('ids') ids: string) {
+    console.log(ids);
+    const product = await this.productsService.getProductsByIds(ids);
+    return product;
+  }
   @Get(':id')
   async getProduct(@Param('id') id: number) {
     const product = await this.productsService.getProduct(id);
