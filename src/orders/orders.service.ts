@@ -62,6 +62,11 @@ export class OrdersService {
     if (user.money < total) {
       throw new NotAcceptableException("User don't have enough money.");
     }
+    for (const product of products) {
+      await this.productModel.findByIdAndUpdate(product.productId, {
+        quantity: { $inc: -product.quantity },
+      });
+    }
     user.money = user.money - total;
     await user.save();
     const product = new this.orderModel({
