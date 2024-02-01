@@ -19,7 +19,7 @@ export class OrdersService {
   ) {}
 
   async getOrders() {
-    let orders2: Array<Order2>;
+    let orders2: Array<Order2> = [];
     let orders = await this.orderModel.find().exec();
     for (const order of orders) {
       const user = await this.userModel.findById(order.userId).exec();
