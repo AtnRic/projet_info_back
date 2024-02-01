@@ -1,16 +1,15 @@
 import {
   BadRequestException,
+  HttpException, HttpStatus,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from '../users/dto/create-user.dto';
+import {CreateUserDto} from '../users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/users.schema';
-import { constants } from './constants';
-import { hash } from 'bcrypt';
+import {UsersService} from '../users/users.service';
+import {JwtService} from '@nestjs/jwt';
+import {constants} from './constants';
 
 @Injectable()
 export class AuthService {
@@ -21,7 +20,7 @@ export class AuthService {
   async register(createUserDto: CreateUserDto) {
     const foundUser = await this.userService.findOne(createUserDto.email);
     if (foundUser) {
-      return new BadRequestException('Ce mail est déjà utilisé.');
+      throw new BadRequestException('Ce mail est déjà utilisé.');
     }
 
     createUserDto.password = await bcrypt.hash(
@@ -40,26 +39,22 @@ export class AuthService {
   async login(data: { email: string; password: string }) {
     const foundUser = await this.userService.findOne(data.email);
     if (!foundUser) {
-      return new NotFoundException('Aucun utilisateur avec cet adresse mail.');
+      throw new NotFoundException('Aucun utilisateur avec cet adresse mail.');
     }
-    //console.log(foundUser);
-    const hashPwd = await bcrypt.hash(data.password, constants.salt);
-    if (await bcrypt.compare(foundUser?.password, hashPwd)) {
-      throw new UnauthorizedException('Mauvais mot de passe.');
+    const valid = await bcrypt.compare(data.password, foundUser?.password)
+    if (!valid) {
+      throw new HttpException("Mot de passe incorrect", HttpStatus.FORBIDDEN);
+    } else {
+      return await this.generateTokens(foundUser);
     }
-
-    const token = await this.generateTokens(foundUser);
-
-    return token;
   }
 
   async verify(token: string) {
     let user;
     try {
-      const payload = await this.jwt.verifyAsync(token, {
+        user = await this.jwt.verifyAsync(token, {
         secret: constants.secret,
       });
-      user = payload;
     } catch {
       throw new UnauthorizedException();
     }
