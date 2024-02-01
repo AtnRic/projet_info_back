@@ -67,6 +67,10 @@ export class AuthService {
     }
   }
 
+  async profile(user) {
+    return await this.userService.findOne(user.data.email);
+  }
+
   private async generateTokens(user) {
     const payload = {
       sub: user._id,

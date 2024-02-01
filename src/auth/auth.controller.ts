@@ -35,6 +35,6 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Get('profile')
   async profile(@Request() req) {
-    return req.user;
+    return await this.authService.profile(req.user);
   }
 }
