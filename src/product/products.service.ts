@@ -34,12 +34,8 @@ export class ProductsService {
     const gen =
       `Décrivez ` +
       name +
-      ` en mettant l'accent sur  son goût de haute qualité. 
-        Capturez l'essence de l'expérience gustative et suscitez 
-        l'appétit du lecteur. Soyez créatif et utilisez un langage captivant pour 
-        faire ressortir les caractéristiques uniques et délicieuses de ` +
-      name +
-      `La description doit être en français , courte, attrayante et adaptée aux spécificités et à la catégorie du produit.`;
+      `en mettant l'accent sur  son goût de haute qualité et sa provenance.` +
+      `La description doit être en français, courte (maximum 20 caractères), attrayante et adaptée aux spécificités et à la catégorie du produit.`;
 
     const openai = new OpenAI({
       apiKey: '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',
