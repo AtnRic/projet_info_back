@@ -8,7 +8,7 @@ import {User} from "../users/users.schema";
 interface Order2 {
   order: Order;
   user: User;
-  products: Product[]
+  products: Array<{product: Product, quantity: number}>
 }
 
 @Injectable()
@@ -27,7 +27,7 @@ export class OrdersService {
       const products = [];
       for (const product of order.products) {
         const produit = await this.productModel.findById(product.productId).exec();
-        products.push(produit);
+        products.push({produit, quantity: product.quantity});
       }
       orders2.push({order, user, products})
     }
