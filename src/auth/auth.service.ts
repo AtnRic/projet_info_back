@@ -61,7 +61,7 @@ export class AuthService {
 
     const foundUser = await this.userService.find(user.data.email);
     if (foundUser !== null) {
-      return await this.generateTokens(user.data);
+      return await this.generateTokens({...user.data, _id: foundUser._id.toString()});
     } else {
       return new UnauthorizedException();
     }
