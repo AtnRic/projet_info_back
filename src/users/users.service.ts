@@ -52,7 +52,7 @@ export class UsersService {
       user.email = email;
     }
     if (money) {
-      user.money = money;
+      user.money = user.money + money;
     }
     console.log(user.money);
     await user.save();
