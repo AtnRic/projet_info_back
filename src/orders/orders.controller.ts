@@ -10,10 +10,12 @@ import { OrdersService } from './orders.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Order } from './order.model';
 import { User } from '../users/users.schema';
+import { Product } from '../product/product.model';
 
 interface Order2 {
   order: Order;
   user: User;
+  products: Array<{ product: Product; quantity: number }>;
 }
 
 @Controller('orders')
