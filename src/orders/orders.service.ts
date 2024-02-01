@@ -26,7 +26,7 @@ export class OrdersService {
       const user = await this.userModel.findById(order.userId).exec();
       const products = [];
       for (const product of order.products) {
-        const produit = await this.productModel.findById(product.productId).exec;
+        const produit = await this.productModel.findById(product.productId).exec();
         products.push(produit);
       }
       orders2.push({order, user, products})
