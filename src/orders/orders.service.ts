@@ -55,13 +55,15 @@ export class OrdersService {
       const result = await this.productModel.findById(product.productId);
       total = total + result.price * product.quantity;
     }
-    const user: User = await this.userModel.findById(userId).exec();
+    const user = await this.userModel.findById(userId).exec();
     if (!user) {
       throw new NotFoundException('User not found with that id.');
     }
     if (user.money < total) {
       throw new NotAcceptableException("User don't have enough money.");
     }
+    user.money = user.money - total;
+    await user.save();
     const product = new this.orderModel({
       products,
       price: total,
