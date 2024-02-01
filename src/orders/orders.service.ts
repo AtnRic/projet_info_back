@@ -11,6 +11,10 @@ export class OrdersService {
     @InjectModel('Product') private readonly productModel: Model<Product>,
   ) {}
 
+  async getOrders() {
+    return await this.orderModel.find().exec()
+  }
+
   async insertOrder(
     products: Array<{ productId: string; quantity: number }>,
     userId: string,

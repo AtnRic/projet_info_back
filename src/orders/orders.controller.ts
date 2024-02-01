@@ -13,6 +13,12 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
+  @Get('')
+  @UseGuards(AuthGuard)
+  async getOrders() {
+    return this.ordersService.getOrders();
+  }
+
   @Post('addOrder')
   @UseGuards(AuthGuard)
   async addOrder(
