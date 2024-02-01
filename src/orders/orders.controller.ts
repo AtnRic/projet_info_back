@@ -8,12 +8,12 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import {Order} from "./order.model";
-import {User} from "../users/users.schema";
+import { Order } from './order.model';
+import { User } from '../users/users.schema';
 
 interface Order2 {
   order: Order;
-  user: User
+  user: User;
 }
 
 @Controller('orders')
