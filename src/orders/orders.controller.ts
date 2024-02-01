@@ -8,6 +8,13 @@ import {
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { AuthGuard } from 'src/auth/auth.guard';
+import {Order} from "./order.model";
+import {User} from "../users/users.schema";
+
+interface Order2 {
+  order: Order;
+  user: User
+}
 
 @Controller('orders')
 export class OrdersController {
@@ -15,7 +22,7 @@ export class OrdersController {
 
   @Get('')
   @UseGuards(AuthGuard)
-  async getOrders() {
+  async getOrders(): Promise<Array<Order2>> {
     return this.ordersService.getOrders();
   }
 
