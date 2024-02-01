@@ -35,14 +35,12 @@ export class ProductsController {
   )
   async addProduct(
     @Body('name') name: string,
-    @Body('description') description: string,
     @Body('price') price: number,
     @Body('quantity') quantity: number,
     @UploadedFile() file: Express.Multer.File,
   ) {
     const mongoId = await this.productsService.insertProduct(
       name,
-      description,
       price,
       quantity,
       'https://api.qrcook.store/public/' + file.filename,

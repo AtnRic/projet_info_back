@@ -81,7 +81,6 @@ export class UsersController {
   @Get('orders')
   @UseGuards(AuthGuard)
   async getOrders(@Request() req) {
-    console.log(req);
     const mongoId = await this.usersService.getOrders(req.user.data.sub);
     return mongoId;
   }
