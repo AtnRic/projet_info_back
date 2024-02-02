@@ -42,11 +42,11 @@ export class StatsService {
       const month = new Date(order.date).getUTCMonth();
       for (const product of products) {
         quantity = Number(quantity) + Number(product.quantity);
-        monthProduct[month] += product.quantity;
+        monthProduct[month] += Number(product.quantity);
       }
       if (order.price !== undefined) {
-        total += order.price;
-        monthPrice[month] += order.price;
+        total += Number(order.price);
+        monthPrice[month] += Number(order.price);
       }
     }
     console.log({
