@@ -64,7 +64,7 @@ export class OrdersService {
     }
     for (const product of products) {
       await this.productModel.findByIdAndUpdate(product.productId, {
-        quantity: { $inc: -product.quantity },
+        $inc: { quantity: -product.quantity },
       });
     }
     user.money = user.money - total;
