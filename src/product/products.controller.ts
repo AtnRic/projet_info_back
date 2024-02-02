@@ -75,7 +75,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      'https://api.qrcook.store/public/' + file.filename,
+      file === undefined ? null : 'https://api.qrcook.store/public/' + file.filename,
       id,
     );
     return mongoId;
