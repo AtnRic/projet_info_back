@@ -43,7 +43,7 @@ export class ProductsController {
       name,
       price,
       quantity,
-      'https://api.qrcook.store/public/' + file.filename,
+        `${process.env.API_URL}/public/` + file.filename,
     );
     return mongoId;
   }
@@ -75,7 +75,7 @@ export class ProductsController {
       description,
       price,
       quantity,
-      file === undefined ? null : 'https://api.qrcook.store/public/' + file.filename,
+      file === undefined ? null : `${process.env.API_URL}/public/` + file.filename,
       id,
     );
     return mongoId;
@@ -83,7 +83,6 @@ export class ProductsController {
 
   @Delete(':id')
   async deleteProduct(@Param('id') id: number) {
-    console.log(id);
     const product = await this.productsService.deleteProduct(id);
     return product;
   }
@@ -95,7 +94,6 @@ export class ProductsController {
   }
   @Post('getProductsByIds')
   async getProductsByIds(@Body('ids') ids: string) {
-    console.log(ids);
     const product = await this.productsService.getProductsByIds(ids);
     return product;
   }

@@ -18,7 +18,6 @@ export class ProductsService {
     picture: string,
   ): Promise<string> {
     const desc: string = await this.openAiDesc(name);
-    console.log(desc);
     const product = new this.productModel({
       name,
       description: desc,
@@ -38,7 +37,7 @@ export class ProductsService {
       `La description doit être en français, courte (maximum 20 caractères), attrayante et adaptée aux spécificités et à la catégorie du produit.`;
 
     const openai = new OpenAI({
-      apiKey: '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',
+      apiKey: process.env.OPENAPI_KEY,
       dangerouslyAllowBrowser: true,
     });
     const completion = await openai.chat.completions.create({
@@ -77,11 +76,10 @@ export class ProductsService {
       product.price = price;
     }
     if (picture) {
-      unlink('images' + product.picture.slice(31), (err) => {
+      unlink('images' + product.picture.replace(`${process.env.API_URL}/public`, ''), (err) => {
         if (err) {
           throw err;
         }
-        console.log('Delete File successfully.');
       });
       product.picture = picture;
     }
@@ -118,11 +116,10 @@ export class ProductsService {
 
   async deleteProduct(id: number) {
     const product = await this.productModel.findByIdAndDelete(id);
-    console.log(product);
     if (!product) {
       return new NotFoundException('Could not find the product with id: ' + id);
     }
-    await unlink('images' + product.picture.slice(31), (err) => {
+    await unlink('images' + product.picture.replace(`${process.env.API_URL}/public`, ''), (err) => {
       if (err) {
         throw err;
       }

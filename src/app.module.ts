@@ -7,12 +7,16 @@ import { OrdersModule } from './orders/orders.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { StatsModule } from './stats/stats.module';
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
     ProductsModule,
     MongooseModule.forRoot(
-      'mongodb+srv://adrienverhaeghe:fBZoFS28mQT0AWj9@cluster0.00lh5ii.mongodb.net/',
+      process.env.MONGODB_URL,
     ),
     OrdersModule,
     UsersModule,

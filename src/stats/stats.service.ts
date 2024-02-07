@@ -32,7 +32,6 @@ export class StatsService {
     orders.sort(function (a, b): any {
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-    console.log('orders', orders);
     let total = 0;
     let quantity: number = 0;
     const monthPrice = Array(12).fill(0);
@@ -49,12 +48,6 @@ export class StatsService {
         monthPrice[month] += Number(order.price);
       }
     }
-    console.log({
-      monthIncome: monthPrice,
-      totalIncome: total,
-      totalOrder: orders.length,
-      totalProductSold: quantity,
-    });
     return {
       monthIncome: monthPrice,
       monthProduct: monthProduct,

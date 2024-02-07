@@ -73,7 +73,6 @@ export class UsersController {
     @Param('id')
     id: number,
   ) {
-    console.log('id', id);
     const mongoId = await this.usersService.deleteOne(id);
     return mongoId;
   }

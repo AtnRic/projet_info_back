@@ -51,7 +51,6 @@ export class OrdersService {
     }
     let total = 0;
     for (const product of products) {
-      console.log(product);
       const result = await this.productModel.findById(product.productId);
       total = total + result.price * product.quantity;
     }

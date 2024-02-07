@@ -18,7 +18,6 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     return await this.authService.register(createUserDto);
   }
 

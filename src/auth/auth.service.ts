@@ -28,7 +28,6 @@ export class AuthService {
       constants.salt,
     );
 
-    console.log(createUserDto);
     const user = await this.userService.create(createUserDto);
 
     const token = await this.generateTokens(user);
